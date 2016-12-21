@@ -40,7 +40,7 @@ Compilation
 Assume you have your Apache-development package(s) installed you
 can compile via `apxs`:
 
-   apxs2 -c mod_blacklist.c 
+    apxs2 -c mod_blacklist.c 
 
 The `Makefile` does that for you.
 
@@ -54,7 +54,7 @@ Create the file /etc/apache2/mods-enabled/blacklist.load:
 
 If you wish to change the prefix create `blacklist.conf`:
 
-     \# Change the blacklist prefix.
+     # Change the blacklist prefix.
      BlacklistPrefix /root/blacklist.d/
 
 
