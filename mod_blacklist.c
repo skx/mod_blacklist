@@ -77,7 +77,7 @@ static int access_checker(request_rec *r)
     if (ret == HTTP_FORBIDDEN
             && (ap_satisfies(r) != SATISFY_ANY || !ap_some_auth_required(r)))
     {
-        ap_log_rerror(APLOG_MARK, APLOG_ERR, 0, r, "mod_blacklist: %s exists - denied", filename);
+        ap_log_rerror(APLOG_MARK, APLOG_ERR, 0, r, "mod_blacklist: %s exists - denying request %s", filename, r->filename);
     }
 
     return ret;
