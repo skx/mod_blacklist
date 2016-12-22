@@ -27,13 +27,18 @@
 #include "http_config.h"
 #include "http_log.h"
 #include "http_request.h"
+#include "apr_strings.h"
 
 
 /*
  * Default directory for our lookup-test.
  */
-#define PREFIX_DIR "/etc/blacklist.d/"
-static char *prefix_dir = NULL;
+#define DEFAULT_PREFIX_DIR "/etc/blacklist.d/"
+
+/*
+ * The global prefix-directory.
+ */
+static char *g_prefix_dir = NULL;
 
 
 /*
@@ -48,7 +53,7 @@ module AP_MODULE_DECLARE_DATA blacklist_module;
 static int access_checker(request_rec *r)
 {
     int ret = OK;
-    char filename[1024];
+    char filename[2048];
     struct stat s;
 
     /*
@@ -59,16 +64,13 @@ static int access_checker(request_rec *r)
         /*
          * Build up a filename to test.
          */
-        snprintf(filename, sizeof(filename) - 1, "%s/%s",
-                 prefix_dir != NULL ? prefix_dir : PREFIX_DIR, r->useragent_ip);
+        apr_snprintf(filename, sizeof(filename) - 1, "%s/%s", g_prefix_dir, r->useragent_ip);
 
         /*
          * If the file exists then the user will be denied.
          */
         if (stat(filename, &s) != -1)
-        {
             ret = HTTP_FORBIDDEN;
-        }
     }
 
     /*
@@ -92,10 +94,11 @@ get_blacklist_prefix(cmd_parms *cmd, void *dconfig, const char *value)
 {
     if (value != NULL && value[0] != 0)
     {
-        if (prefix_dir != NULL)
-            free(prefix_dir);
-
-        prefix_dir = strdup(value);
+        /*
+         * Free old value; set new one.
+         */
+        free(g_prefix_dir);
+        g_prefix_dir = strdup(value);
     }
 
     return NULL;
@@ -118,6 +121,8 @@ static const command_rec access_cmds[] =
 static void register_hooks(apr_pool_t *p)
 {
     ap_hook_access_checker(access_checker, NULL, NULL, APR_HOOK_MIDDLE);
+
+    g_prefix_dir = strdup(DEFAULT_PREFIX_DIR);
 }
 
 /*
