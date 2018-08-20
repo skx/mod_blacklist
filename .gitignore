@@ -3,3 +3,11 @@ mod_blacklist.lo
 mod_blacklist.slo
 build-stamp
 .libs/
+debian/.debhelper/
+debian/files
+debian/libapache2-mod-blacklist.debhelper.log
+debian/libapache2-mod-blacklist.postinst.debhelper
+debian/libapache2-mod-blacklist.postrm.debhelper
+debian/libapache2-mod-blacklist.prerm.debhelper
+debian/libapache2-mod-blacklist.substvars
+debian/libapache2-mod-blacklist/
