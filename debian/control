@@ -1,0 +1,16 @@
+Source: libapache2-mod-blacklist
+Section: web
+Priority: optional
+Maintainer: Steve Kemp <steve@steve.org.uk>
+Build-Depends: debhelper (>> 9.0.0), dh-apache2, apache2-dev
+Standards-Version: 3.9.8
+Homepage: https://github.com/skx/mod_blacklist
+
+Package: libapache2-mod-blacklist
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, bsd-mailx | mailx
+Description: module to easily allow blacklisting remote IPs
+ mod_blacklist is an  module for Apache which provides you with the ability
+ to easily blacklist remote hosts, on a per-IP basis.
+ .
+ This module only works on Apache 2.x servers

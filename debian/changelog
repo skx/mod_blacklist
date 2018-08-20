@@ -1,0 +1,5 @@
+libapache2-mod-blacklist (0.2) unstable; urgency=low
+
+  * Initial release.
+
+ -- Steve Kemp <steve@steve.org.uk>  Mon, 20 Aug 2018 19:00:19 +0200
