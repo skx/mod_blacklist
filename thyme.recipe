@@ -1,0 +1,46 @@
+#
+# This recipe builds a Debian `libapache2-mod-blacklist` package
+#
+container = debian:stretch
+
+
+#
+# Commands in the before-stage run on the host, in a temporary directory
+#
+before:
+   git clone https://github.com/skx/mod_blacklist/
+
+
+#
+# Commands in the during-phase are executed in a transient docker
+# container.  If any step fails then the process will be aborted.
+#
+# The directory /work will be our workspace.  Because we cloned
+# our source in the previous step to "kpie" that will be accessible
+# as /work/kpie/
+#
+during:
+        # Ensure we're in our source tree
+        cd /work/mod_blacklist
+
+        # Ensure we can install packages.
+        apt-get update
+
+        # Install the dependencies
+        apt-get install --yes --force-yes apache2-dev debhelper build-essential devscripts
+
+        # build the source + binary packages
+        debuild --no-tgz-check -us -uc
+
+
+#
+# Finally once we're complete copy the generated package to ~/out/
+#
+# NOTE: `debuild` will generate the results in the parent-directory
+# so we copy from `.` not `./mod_blacklist/`.
+#
+# Also remember that this step runs on the host.
+#
+after:
+        mkdir -p $HOME/out/$RECIPE/$IMAGE_VERSION
+        cp libapache2-mod-blacklist[-_]* $HOME/out/$RECIPE/$IMAGE_VERSION
