@@ -1,11 +1,10 @@
 /**
  * mod_blacklist.c - Easily blacklist remote IP addresses.
  *
- * For every individaul IP address you wish to blacklist just
+ * For every individual IP address you wish to blacklist just
  * create a file. The overhead is one stat() call for each visitor.
  *
  * https://github.com/skx/mod_blacklist
- * https://git.steve.org.uk/skx/mod_blacklist
  *
  */
 

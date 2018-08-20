@@ -9,8 +9,6 @@ Links
 
 * Github
    * https://github.com/skx/mod_blacklist
-* Mirror
-   * https://git.steve.org.uk/skx/mod_blacklist
 
 
 About
